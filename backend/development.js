@@ -1,14 +1,9 @@
 import http from 'http';
+import {parse as parseUrl} from 'url';
 
 const HANDLERS_FOLDER = './handlers';
 const server = http.createServer(async (request, response) => {
 	const path = parseUrl(request.url, true).pathname;
-
-	if (path === '/') {
-		handlerPath = `${HANDLERS_FOLDER}/index.js`;
-	} else {
-		handlerPath = `${HANDLERS_FOLDER + path}.js`;
-	}
 
 	try {
 		let handler;
