@@ -1,25 +1,34 @@
 import http from 'http';
-import {parse as parseUrl} from 'url';
+import {getRequestUrl} from 'serverloose';
 
-const HANDLERS_FOLDER = './handlers';
+const handlersFolder = './handlers';
 const server = http.createServer(async (request, response) => {
-	const path = parseUrl(request.url, true).pathname;
+	const {pathname} = getRequestUrl(request);
+
+	if (/favicon\.ico/i.test(request.url)) {
+		response.end('nope');
+		return;
+	}
 
 	try {
 		let handler;
 
 		try {
-			handler = await import(`${HANDLERS_FOLDER + path}/index.js`);
+			handler = await import(`${handlersFolder + pathname}/index.js`);
 		} catch (error) {
-			handler = await import(`${HANDLERS_FOLDER + path}.js`);
+			if (!/cannot find module/i.test(error.message)) {
+				console.log(error);
+			}
+
+			handler = await import(`${handlersFolder + pathname}.js`);
 		}
 
 		await handler.default(request, response);
 	} catch (error) {
-		// console.error(error);
+		console.error(error);
 		response.end('404 Not Found');
 	}
 });
 
-server.listen(4000);
-console.log('> Listening on port 4000');
+server.listen(4001);
+console.log('> Listening on port 4001');

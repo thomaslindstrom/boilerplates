@@ -11,7 +11,8 @@
         "alias": "now alias"
     },
     "dependencies": {
-        "lilypads": "^1.1.0"
+        "lilypads": "^1.3.0",
+        "serverloose": "^1.3.0"
     },
     "devDependencies": {
         "babel-core": "^6.26.3",
@@ -23,9 +24,9 @@
         "babel-plugin-transform-react-constant-elements": "^6.23.0",
         "babel-plugin-transform-react-inline-elements": "^6.22.0",
         "eslint-config-amphibian": "^1.1.3",
-        "esm": "^3.2.3",
+        "esm": "^3.2.25",
         "jest": "^23.6.0",
-        "nodemon": "^1.18.10",
+        "nodemon": "^1.19.1",
         "xo": "^0.24.0"
     },
     "xo": {

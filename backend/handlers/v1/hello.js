@@ -1,12 +1,12 @@
 import lilypads from 'lilypads';
-import handler from '../../utilities/handler';
+import handler from 'serverloose';
 
 const specification = {
 	description: 'Get hello.',
 	examples: ['GET /v1/hello'],
 	request: {
-		method: 'get',
-		path: '/v1/hello'
+		methods: ['get'],
+		paths: ['/v1/hello']
 	}
 };
 
@@ -15,10 +15,7 @@ export default handler(({request}) => {
 	const {url} = request;
 	const options = {id: `handlers/v1/hello/${url}`};
 
-	return lilypads(options, () => (
-		JSON.stringify({
-			success: true,
-			message: `hello from ${url}`
-		})
-	))
-});
+	return lilypads(options, () => ({
+		message: `hello from ${url}`
+	}));
+}, specification.request);
